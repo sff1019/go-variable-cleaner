@@ -1,4 +1,4 @@
-# variable-cleaner
+# varcleaner
 
 variable-cleaner solves issues such as:
 - Detect variables that does not needed to be declared (e.g. only used once)

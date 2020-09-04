@@ -1,5 +1,5 @@
 // This file can build as a plugin for golangci-lint by below command.
-//    go build -buildmode=plugin -o path_to_plugin_dir go-variable-cleaner/plugin/go-variable-cleaner
+//    go build -buildmode=plugin -o path_to_plugin_dir varcleaner/plugin/varcleaner
 // See: https://golangci-lint.run/contributing/new-linters/#how-to-add-a-private-linter-to-golangci-lint
 
 package main
@@ -7,13 +7,14 @@ package main
 import (
 	"strings"
 
-	"go-variable-cleaner"
+	"varcleaner"
+
 	"golang.org/x/tools/go/analysis"
 )
 
 // flags for Analyzer.Flag.
 // If you would like to specify flags for your plugin, you can put them via 'ldflags' as below.
-//     $ go build -buildmode=plugin -ldflags "-X 'main.flags=-opt val'" go-variable-cleaner/plugin/go-variable-cleaner
+//     $ go build -buildmode=plugin -ldflags "-X 'main.flags=-opt val'" varcleaner/plugin/varcleaner
 var flags string
 
 // AnalyzerPlugin provides analyzers as a plugin.
@@ -24,13 +25,12 @@ type analyzerPlugin struct{}
 
 func (analyzerPlugin) GetAnalyzers() []*analysis.Analyzer {
 	if flags != "" {
-		flagset := go-variable-cleaner.Analyzer.Flags
+		flagset := varcleaner.Analyzer.Flags
 		if err := flagset.Parse(strings.Split(flags, " ")); err != nil {
-			panic("cannot parse flags of go-variable-cleaner: " + err.Error())
+			panic("cannot parse flags of varcleaner: " + err.Error())
 		}
 	}
 	return []*analysis.Analyzer{
-		go-variable-cleaner.Analyzer,
+		varcleaner.Analyzer,
 	}
 }
-
